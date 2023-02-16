@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductImage extends Model
 {
     use HasFactory;
-    protected $fillable = ['id', 'product_color_size_id', 'image'];
+    protected $fillable = ['id', 'product_id', 'image'];
     protected $table = 'product_images';
 
     public function productColorSize()

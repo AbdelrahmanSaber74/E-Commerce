@@ -43,6 +43,8 @@
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('dashboard') }}/assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('dashboard') }}/dropify.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/assets/css/dropify.css') }}">
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/select2.min.css">
 </head>
@@ -300,6 +302,9 @@
 
     <!-- lazyload js-->
     <script src="{{ asset('dashboard') }}/assets/js/lazysizes.min.js"></script>
+
+    <!-- Dropfiy js-->
+    <script src="{{asset('dashboard/assets/js/dropify.js')}}"></script>
 
     <!--script admin-->
     <script src="{{ asset('dashboard') }}/assets/js/admin-script.js"></script>

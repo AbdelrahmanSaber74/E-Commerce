@@ -38,11 +38,8 @@
 
                             </form>
 
-                            <a class="btn btn-primary mt-md-0 mt-2" href="{{route('dashboard.products.create')}}">إضافة منتج جديد</a>
+                            <a class="btn btn-primary mt-md-0 mt-2" href="{{route('Products.create') }}">إضافة منتج جديد</a>
                            
-
-
-
                         </div>
 
                         <div class="card-body">
@@ -64,14 +61,38 @@
                                             <th>السعر الأساسي</th>
                                             <th>التخفيض الأساسي</th>    
                                             <th>الالوان</th>
-                                            <th></th>
+                                            <th>العمليات</th>
 
                                         </tr>
                                     </thead>
 
                                     <tbody>
+                                        
+                                    @foreach ($Products as $Product )
+
+                                    <tr>
+                                        <td>{{ $Product->name }}</td>
+                                        <td>{{ $Product->category->name }}</td>
+
+                                        <td>{{ $Product->price }}</td>
+                                        <td>{{ $Product->discount_price }}</td>
+                                        <td>
+                                            
+                                            @foreach ($Product->productColor as $productColor) {
+                                                {{ $productColor->color }} 
+                                            }
+                                            @endforeach
+                                        </td>
+
+                                        <td> تعديل و</td>
+                                    </tr>
+                                        
+                                    @endforeach
 
                                     </tbody>
+
+
+                                    
                                 </table>
                             </div>
                         </div>
@@ -88,7 +109,7 @@
 @endsection
 
 
-@push('javascripts')
+{{-- @push('javascripts')
     <script type="text/javascript">
         $(function() {
             var table = $('#editableTable').DataTable({
@@ -135,4 +156,4 @@
             $('#deletemodal #id').val(id);
         })
     </script>
-@endpush
+@endpush --}}

@@ -14,9 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('product_sizes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->id();
+            // $table->integer('product_id')->unsigned();
+            // $table->foreign('product_id')->references('id')->on('products');
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+
             $table->string('size');
             $table->timestamps();
         });

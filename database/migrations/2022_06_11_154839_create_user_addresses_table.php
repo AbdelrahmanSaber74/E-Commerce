@@ -14,9 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_addresses', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->id();
+            // $table->integer('user_id')->unsigned();
+            // $table->foreign('user_id')->references('id')->on('users');
+
+            $table->foreignId('user_id')->constrained('users');
+
             $table->string('address');
             $table->string('city');
             $table->string('state');

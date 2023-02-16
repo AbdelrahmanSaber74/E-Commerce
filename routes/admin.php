@@ -1,13 +1,11 @@
 <?php
 
+use App\Http\Controllers\Dashboard\CategorieController;
+use App\Http\Controllers\Dashboard\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\SettingController;
 
 
-
-// Route::get('/', function () {
-//     return view('welcome');
-// })->name('admin');
 
 // To Check Admin Login
 Route::middleware(['auth', 'CheckAdmin'])->group(function () {
@@ -23,8 +21,11 @@ Route::middleware(['auth', 'CheckAdmin'])->group(function () {
     Route::get('Admin.Settings.Update' , [SettingController::class , 'update'])->name('admin.settings.update');
 
 
+    // -------------------------- Route For Categories  Admin -------------------------- //
+    Route::resource('Category' , CategorieController::class);
 
-
+    // -------------------------- Route For Product  Admin -------------------------- //
+    Route::resource('Products' , ProductController::class);
 
 
 

@@ -3,6 +3,21 @@
 @section('body')
     <div class="page-body">
         <!-- Container-fluid starts-->
+
+        @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session()->get('success') }}</strong>
+            </button>
+        </div>
+        @endif
+    
+        @if (session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ session()->get('error') }}</strong>
+            </button>
+        </div>
+        @endif
+
         <div class="container-fluid">
             <div class="page-header">
                 <div class="row">
@@ -38,26 +53,20 @@
                         </div>
                         <div class="card-body">
                             <div class="digital-add needs-validation">
-                                <form action="{{ route('dashboard.products.store') }}" method="post"
+                                <form action="{{ route('Products.store') }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="col-12">
 
-                                        @if ($errors->any())
-                                            {!! implode('', $errors->all('<div>:message</div>')) !!}
-                                        @endif
+
 
                                         <div class="form-group">
                                             <label for="validationCustomtitle" class="col-form-label pt-0">القسم</label>
                                             <select name="category_id" id="" class="form-control" required>
-                                                <option value="">اختر القسم</option>
+                                                <option hidden value="">اختر القسم</option>
                                                 @foreach ($categories as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                    @foreach ($category->child as $child)
-                                                        <option value="{{ $child->id }}">
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;{{ $child->name }}</option>
-                                                    @endforeach
                                                 @endforeach
                                             </select>
                                         </div>
@@ -81,7 +90,7 @@
 
                                         <div class="form-group">
                                             <label class="col-form-label">وصف المنتج</label>
-                                            <textarea rows="5" cols="12" name="description">{{ $setting->twitter }}</textarea>
+                                            <textarea rows="5" cols="12" name="description"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="validationCustom02" class="col-form-label">

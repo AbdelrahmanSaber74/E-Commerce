@@ -36,12 +36,26 @@ return [
             'throw' => false,
         ],
 
-        'dashboard' => [
+        'dashboardSetting' => [
             'driver' => 'local',
-            'root' => public_path('dashboard/setting'),
+            'root' => public_path('dashboard/Setting'),
             'throw' => false,
         ],
 
+        'Categories' => [
+            'driver' => 'local',
+            'root' => public_path('dashboard/Categories'),
+            'throw' => false,
+        ],
+        
+
+        'Products' => [
+            'driver' => 'local',
+            'root' => public_path('dashboard/Products'),
+            'throw' => false,
+        ],
+
+        
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

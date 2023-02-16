@@ -14,9 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->id();
+            // $table->integer('user_id')->unsigned();
+            // $table->foreign('user_id')->references('id')->on('users');
+
+            $table->foreignId('user_id')->constrained('users');
+
+
             $table->integer('status')->default(0);
             $table->string('payment_method');
             $table->string('payment_status');

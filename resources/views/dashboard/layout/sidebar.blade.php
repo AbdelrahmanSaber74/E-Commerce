@@ -35,7 +35,7 @@
                  </a>
                  <ul class="sidebar-submenu">
                      <li>
-                         <a href="">
+                         <a href="{{ route('Category.index') }}">
                              <i class="fa fa-circle"></i>الأقسام
                          </a>
                      </li>
@@ -52,12 +52,12 @@
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="">
+                        <a href="{{route('Products.index')}}">
                             <i class="fa fa-circle"></i>المنتجات
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="{{route('Products.create')}}">
                             <i class="fa fa-circle"></i>اضافة منتج
                         </a>
                     </li>
@@ -137,10 +137,15 @@
 
 
              <li>
-                 <a class="sidebar-header" href="login.html">
-                     <i data-feather="log-in"></i>
-                     <span>تسجيل الخروج</span>
+                 <a class="sidebar-header" href="">
+
+                    <form   action="{{route('logout')}}" method="POST">
+                        @csrf
+                        <i data-feather="log-in"></i>
+                        <input  type="submit" value="تسجيل الخروج">
+                    </form>
                  </a>
+
              </li>
          </ul>
      </div>

@@ -14,11 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('product_color_size', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('product_size_id')->unsigned();
-            $table->integer('product_color_id')->unsigned();
-            $table->foreign('product_size_id')->references('id')->on('product_sizes');
-            $table->foreign('product_color_id')->references('id')->on('product_colors');
+            $table->id();
+            // $table->integer('product_size_id')->unsigned();
+            // $table->integer('product_color_id')->unsigned();
+            // $table->foreign('product_size_id')->references('id')->on('product_sizes');
+            // $table->foreign('product_color_id')->references('id')->on('product_colors');
+
+            $table->foreignId('product_size_id')->constrained('product_sizes');
+            $table->foreignId('product_color_id')->constrained('product_colors');
+
             $table->integer('quantity');
             $table->decimal('price_two', 10, 2)->nullable();
             $table->decimal('discount', 10, 2)->nullable();
