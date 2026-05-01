@@ -19,134 +19,95 @@
              </div>
          </div> --}}
          <ul class="sidebar-menu">
-             <li>
-                 <a class="sidebar-header" href="">
-                     <i data-feather="home"></i>
-                     <span>لوحة التحكم</span>
-                 </a>
-             </li>
+            <li>
+                <a class="sidebar-header" href="{{ route('admin') }}">
+                    <i data-feather="home"></i>
+                    <span>{{ __('admin.dashboard') }}</span>
+                </a>
+            </li>
 
+            <li>
+                <a class="sidebar-header" href="javascript:void(0)">
+                    <i data-feather="folder"></i>
+                    <span>{{ __('admin.categories') }}</span>
+                    <i class="fa fa-angle-right pull-right"></i>
+                </a>
+                <ul class="sidebar-submenu">
+                    <li>
+                        <a href="{{ route('Category.index') }}">
+                            <i class="fa fa-circle"></i>{{ __('admin.categories') }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-             <li>
-                 <a class="sidebar-header" href="javascript:void(0)">
-                     <i data-feather="folder"></i>
-                     <span>الأقسام</span>
-                     <i class="fa fa-angle-right pull-right"></i>
-                 </a>
-                 <ul class="sidebar-submenu">
-                     <li>
-                         <a href="{{ route('Category.index') }}">
-                             <i class="fa fa-circle"></i>الأقسام
-                         </a>
-                     </li>
-                 </ul>
-             </li>
-
-
-
-             <li>
+            <li>
                 <a class="sidebar-header" href="javascript:void(0)">
                     <i data-feather="gift"></i>
-                    <span>المنتجات</span>
+                    <span>{{ __('admin.products') }}</span>
                     <i class="fa fa-angle-right pull-right"></i>
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="{{route('Products.index')}}">
-                            <i class="fa fa-circle"></i>المنتجات
+                        <a href="{{ route('Products.index') }}">
+                            <i class="fa fa-circle"></i>{{ __('admin.products') }}
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('Products.create')}}">
-                            <i class="fa fa-circle"></i>اضافة منتج
+                        <a href="{{ route('Products.create') }}">
+                            <i class="fa fa-circle"></i>{{ __('admin.add_new') }}
                         </a>
                     </li>
                 </ul>
             </li>
 
-
-
-             <li>
+            <li>
                 <a class="sidebar-header" href="javascript:void(0)">
                     <i data-feather="shopping-cart"></i>
-                    <span>الطلبات</span>
+                    <span>{{ __('admin.orders') }}</span>
                     <i class="fa fa-angle-right pull-right"></i>
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="order.html">
-                            <i class="fa fa-circle"></i>الطلبات
-                        </a>
-                    </li>
-                    <li>
-                        <a href="transactions.html">
-                            <i class="fa fa-circle"></i>Transactions
+                        <a href="{{ route('orders.index') }}">
+                            <i class="fa fa-circle"></i>{{ __('admin.orders') }}
                         </a>
                     </li>
                 </ul>
             </li>
 
-             <li>
-                 <a class="sidebar-header" href="javascript:void(0)">
-                     <i data-feather="tag"></i>
-                     <span>الكوبونات</span>
-                     <i class="fa fa-angle-right pull-right"></i>
-                 </a>
-                 <ul class="sidebar-submenu">
-                     <li>
-                         <a href="coupon-list.html">
-                             <i class="fa fa-circle"></i>الكوبونات
-                         </a>
-                     </li>
-                     <li>
-                         <a href="coupon-create.html">
-                             <i class="fa fa-circle"></i>إنشاء كوبون
-                         </a>
-                     </li>
-                 </ul>
-             </li>
+            <li>
+                <a class="sidebar-header" href="javascript:void(0)">
+                    <i data-feather="tag"></i>
+                    <span>{{ __('admin.coupons') ?? 'Coupons' }}</span>
+                    <i class="fa fa-angle-right pull-right"></i>
+                </a>
+                <ul class="sidebar-submenu">
+                    <li>
+                        <a href="{{ route('Coupons.index') }}">
+                            <i class="fa fa-circle"></i>{{ __('admin.coupons') ?? 'Coupons' }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-             <li>
-                 <a class="sidebar-header" href="javascript:void(0)">
-                    <i data-feather="user-plus"></i>
-                     <span>أعضاء الموقع</span>
-                     <i class="fa fa-angle-right pull-right"></i>
-                 </a>
-                 <ul class="sidebar-submenu">
-                     <li>
-                         <a href="pages-list.html">
-                             <i class="fa fa-circle"></i>المديرين
-                         </a>
-                     </li>
-                     <li>
-                         <a href="page-create.html">
-                             <i class="fa fa-circle"></i>المشترين
-                         </a>
-                     </li>
-                 </ul>
-             </li>
+            <li>
+                <a class="sidebar-header" href="{{ route('Settings') }}">
+                    <i data-feather="settings"></i>
+                    <span>{{ __('admin.settings') }}</span>
+                </a>
+            </li>
 
-
-
-
-             <li>
-                 <a class="sidebar-header" href="{{ route('Settings') }}"><i data-feather="settings"></i><span>اعدادات
-                         الموقع</span></a>
-             </li>
-
-
-
-             <li>
-                 <a class="sidebar-header" href="">
-
-                    <form   action="{{route('logout')}}" method="POST">
-                        @csrf
-                        <i data-feather="log-in"></i>
-                        <input  type="submit" value="تسجيل الخروج">
-                    </form>
-                 </a>
-
-             </li>
+            <li>
+                <a class="sidebar-header" href="{{ route('logout') }}" 
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i data-feather="log-out"></i>
+                    <span>{{ __('messages.logout') }}</span>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </li>
          </ul>
      </div>
  </div>

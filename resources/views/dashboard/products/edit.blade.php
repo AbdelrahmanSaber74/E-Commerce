@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="page-header-left">
-                            <h3> المنتجات
+                            <h3> {{ __('admin.products') }}
                             </h3>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5>اضافة منتج</h5>
+                            <h5>{{ __('admin.edit') }} {{ __('admin.products') }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="digital-add needs-validation">
@@ -45,14 +45,11 @@
 
                                     <div class="col-12">
 
-                                        @if ($errors->any())
-                                            {!! implode('', $errors->all('<div>:message</div>')) !!}
-                                        @endif
 
                                         <div class="form-group">
-                                            <label for="validationCustomtitle" class="col-form-label pt-0">القسم</label>
+                                            <label for="validationCustomtitle" class="col-form-label pt-0">{{ __('admin.category') }}</label>
                                             <select name="category_id" id="" class="form-control" required>
-                                                <option value="">اختر القسم</option>
+                                                <option value="">{{ __('admin.select_category') }}</option>
                                                 @foreach ($categories as $category)
                                                     <option value="{{ $category->id }}"
                                                         @if($category->id == $product->category_id) selected @endif>
@@ -69,7 +66,7 @@
 
                                         <div class="form-group">
                                             <label for="validationCustom05" class="col-form-label pt-0">
-                                                الصورة الرئيسية للمنتج</label>
+                                                {{ __('admin.product_image') }}</label>
                                             <input class="form-control dropify" id="validationCustom05" type="file"
                                                 name="image" data-default-file="{{asset($product->image)}}">
                                         </div>
@@ -77,33 +74,33 @@
 
                                         <div class="form-group">
                                             <label for="validationCustom01" class="col-form-label pt-0">
-                                                اسم المنتج</label>
+                                                {{ __('admin.name') }}</label>
                                             <input class="form-control" id="validationCustom01" type="text"
                                                 name="name" required value="{{$product->name}}">
                                         </div>
 
 
                                         <div class="form-group">
-                                            <label class="col-form-label">وصف المنتج</label>
+                                            <label class="col-form-label">{{ __('admin.description') }}</label>
                                             <textarea rows="5" cols="12" name="description">{{ $product->description }}</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="validationCustom02" class="col-form-label">
-                                                السعر الأساسي للمنتج </label>
+                                                {{ __('admin.price') }} </label>
                                             <input class="form-control" id="validationCustom02" type="text"
                                                 name="price"  value="{{$product->price}}">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="validationCustom02" class="col-form-label">
-                                                التخفيض الأساسي للمنتج </label>
+                                                {{ __('admin.discount_price') }} </label>
                                             <input class="form-control" id="validationCustom02" type="text"
                                                 name="discount_price"  value="{{$product->discount_price}}">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="validationCustom02" class="col-form-label">
-                                                الألوان المتاحة للمنتج </label>
+                                                {{ __('admin.available_colors') }} </label>
                                             <select class="form-control colors" multiple="multiple" name="colors[]" value="{{$product->color}}">
                                             </select>
                                         </div>
@@ -111,7 +108,7 @@
 
                                         <div class="form-group">
                                             <label for="validationCustom02" class="col-form-label">
-                                                الاحجام المتوفرة </label>
+                                                {{ __('admin.available_sizes') }} </label>
                                             <select class="form-control colors" multiple="multiple" name="sizes[]" value="{{$product->size}}">
                                             </select>
                                         </div>
@@ -120,7 +117,7 @@
 
                                         <div class="form-group">
                                             <label for="validationCustom05" class="col-form-label pt-0">
-                                               صور المنتج</label>
+                                               {{ __('admin.product_images') }}</label>
                                             <input class="form-control dropify" id="validationCustom05" type="file"
                                                 name="images[]" multiple>
                                         </div>
@@ -131,7 +128,7 @@
 
 
                                     <div class="form-group">
-                                        <button class="btn btn-primary" type="submit">حفظ</button>
+                                        <button class="btn btn-primary" type="submit">{{ __('admin.save') }}</button>
                                     </div>
 
 

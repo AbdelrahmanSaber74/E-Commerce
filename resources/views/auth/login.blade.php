@@ -124,23 +124,8 @@
                             <div class="single-item">
                                 <div>
                                     <div>
-                                        <h3>Welcome to Multikart</h3>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy.</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <h3>Welcome to Multikart</h3>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy.</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <h3>Welcome to Multikart</h3>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy.</p>
+                                        <h3>{{ __('messages.welcome') }}</h3>
+                                        <p>{{ __('messages.auth_subtitle') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -153,12 +138,12 @@
                                     <li class="nav-item">
                                         <a class="nav-link active" id="top-profile-tab" data-bs-toggle="tab"
                                             href="#top-profile" role="tab" aria-controls="top-profile"
-                                            aria-selected="true"><span class="icon-user me-2"></span>Login</a>
+                                            aria-selected="true"><span class="icon-user me-2"></span>{{ __('messages.login') }}</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                             href="#top-contact" role="tab" aria-controls="top-contact"
-                                            aria-selected="false"><span class="icon-unlock me-2"></span>Register</a>
+                                            aria-selected="false"><span class="icon-unlock me-2"></span>{{ __('messages.register') }}</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content" id="top-tabContent">
@@ -193,22 +178,19 @@
                                             <div class="form-terms">
                                                 <div class="form-check mesm-2">
                                                    
-                                                    <a href="javascript:void(0)" class="btn btn-default forgot-pass">Forgot
-                                                        Password!</a>
+                                                    <a href="javascript:void(0)" class="btn btn-default forgot-pass">{{ __('messages.forgot_password') }}</a>
                                                 </div>
                                             </div>
                                             <div class="form-button">
                                                 <button type="submit" class="btn btn-primary">
-                                                    {{ __('Login') }}
+                                                    {{ __('messages.login') }}
                                                 </button>
                                             </div>
                                             <div class="form-footer">
-                                                <span>Or Login up with social platforms</span>
+                                                <span>{{ __('messages.or_login_with') ?? 'Or Login With' }}</span>
                                                 <ul class="social">
-                                                    <li><a class="ti-facebook" href=""></a></li>
-                                                    <li><a class="ti-twitter" href=""></a></li>
-                                                    <li><a class="ti-instagram" href=""></a></li>
-                                                    <li><a class="ti-pinterest" href=""></a></li>
+                                                    <li><a class="ti-google" href="{{ route('social.login', 'google') }}" style="color: #db4437;"></a></li>
+                                                    <li><a class="ti-facebook" href="{{ route('social.login', 'facebook') }}" style="color: #4267B2;"></a></li>
                                                 </ul>
                                             </div>
                                         </form>
@@ -221,7 +203,7 @@
                                             @csrf
                     
                                             <div class="row mb-3">
-                                                <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                                                <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('messages.name') }}</label>
                     
                                                 <div class="col-md-6">
                                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -235,7 +217,7 @@
                                             </div>
                     
                                             <div class="row mb-3">
-                                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('messages.email') }}</label>
                     
                                                 <div class="col-md-6">
                                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
@@ -249,7 +231,7 @@
                                             </div>
                     
                                             <div class="row mb-3">
-                                                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                                                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('messages.password') }}</label>
                     
                                                 <div class="col-md-6">
                                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -263,7 +245,7 @@
                                             </div>
                     
                                             <div class="row mb-3">
-                                                <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                                                <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('messages.confirm_password') }}</label>
                     
                                                 <div class="col-md-6">
                                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -273,7 +255,7 @@
                                             <div class="row mb-0">
                                                 <div class="col-md-6 offset-md-4">
                                                     <button type="submit" class="btn btn-primary">
-                                                        {{ __('Register') }}
+                                                        {{ __('messages.register') }}
                                                     </button>
                                                 </div>
                                             </div>
@@ -286,7 +268,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="index.html" class="btn btn-primary back-btn"><i data-feather="arrow-left"></i>back</a>
+                <a href="{{ route('front.index') }}" class="btn btn-primary back-btn"><i data-feather="arrow-left"></i>{{ __('messages.continue_shopping') }}</a>
             </div>
         </div>
     </div>

@@ -1,0 +1,21 @@
+:root {
+    --primary: #818cf8;
+    --secondary: #c084fc;
+    --dark: #0f172a;
+    --slate-800: #1e293b;
+    --glass: rgba(30, 41, 59, 0.7);
+    --font-main: 'Outfit', 'Noto Kufi Arabic', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--dark);
+    color: #f8fafc;
+    font-family: var(--font-main);
+    line-height: 1.5;
+}
