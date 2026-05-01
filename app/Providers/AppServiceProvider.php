@@ -25,23 +25,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-
-        if(!app()->runningInConsole() ) {
-
-        $Setting = Setting::firstOr( function () {
-
-            Setting::create([
-                'name' => 'Site Name' ,
-                'description' => 'description Name' ,
-            ]);
-
-        });
-
         Paginator::useBootstrap();
 
-         
-    }
+        \Illuminate\Support\Facades\Blade::directive('money', function ($expression) {
+            return "<?php echo \App\Helpers\CurrencyHelper::format((float) $expression); ?>";
+        });
 
-}
+        if (!app()->runningInConsole()) {
+            $settingRepository = app(\App\Repositories\Interfaces\SettingRepositoryInterface::class);
+            $setting = $settingRepository->getSettings();
+            
+            if (!$setting) {
+                $setting = \App\Models\Setting::create([
+                    'name' => 'Site Name',
+                    'description' => 'Site Description',
+                ]);
+            }
+
+            view()->share('setting', $setting);
+        }
+    }
 }

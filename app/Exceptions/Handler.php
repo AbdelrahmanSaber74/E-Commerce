@@ -46,5 +46,16 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        $this->renderable(function (\App\Exceptions\Business\BusinessException $e, $request) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage()
+                ], 422);
+            }
+
+            return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
+        });
     }
 }

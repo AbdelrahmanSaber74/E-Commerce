@@ -3,47 +3,34 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\SettingUpdateRequest;
 use App\Http\Requests\SettingAdminUpdatetRequest;
-use App\Models\Setting;
-use App\Utils\ImageUpload;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Image;
-use App\Traits\UploadImageTrait;
+use App\Services\SettingService;
+
 class SettingController extends Controller
 {
+    protected $settingService;
 
-    use UploadImageTrait ;
-    public function index()
+    public function __construct(SettingService $settingService)
     {
-        $setting = Setting::first();
-        return view('dashboard.settings.index' , compact('setting'));
+        $this->settingService = $settingService;
     }
 
-
-    public function update(SettingAdminUpdatetRequest $request, Setting $setting)
+    public function index()
     {
+        $setting = $this->settingService->getSettings();
+        return view('dashboard.settings.index', compact('setting'));
+    }
 
-        $setting->update([$request->validated()]);
-        $setting = Setting::findOrFail($request->id);
-        $setting->update($request->validated());
-
-        if($request->has('logo')){
-            $path =  $this->UploadImageSetting($request ,'logo','Images');
-            $setting->update(['logo' => $path]);
+    public function update(SettingAdminUpdatetRequest $request)
+    {
+        try {
+            $data = $request->validated();
+            $data['photo_request'] = $request;
+            
+            $this->settingService->updateSettings($request->id, $data);
+            return redirect()->back()->with('success', 'تم تحديث الاعدادات بنجاح');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
-
-
-        if($request->has('favicon')){
-            $path =  $this->UploadImageSetting($request ,'favicon','Images');
-            $setting->update(['favicon' => $path]);
-        }
-
-        return redirect()->back()->with('success', 'تم تحديث الاعدادات بنجاح');
-
-   }
-
-
-
+    }
 }

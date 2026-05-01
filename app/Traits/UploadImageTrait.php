@@ -1,39 +1,29 @@
 <?php
 
-namespace App\Traits ;
-use Illuminate\Http\Request;
+namespace App\Traits;
 
-trait UploadImageTrait {
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
-
-
-public function UploadImageSetting(Request $request ,  $nameInput , $foldername )
+trait UploadImageTrait
 {
-    $image = $request->file($nameInput)->getClientOriginalName();
-    $path = $request->file($nameInput)->storeAs($foldername , $image  , 'dashboardSetting') ;
-    return $path ;
+    /**
+     * Upload a file to a specific disk and folder
+     */
+    public function uploadFile(UploadedFile $file, string $folder, string $disk = 'public'): string
+    {
+        $filename = time() . '_' . $file->getClientOriginalName();
+        return $file->storeAs($folder, $filename, $disk);
+    }
+
+    /**
+     * Delete a file from a disk
+     */
+    public function deleteFile(string $path, string $disk = 'public'): bool
+    {
+        if (Storage::disk($disk)->exists($path)) {
+            return Storage::disk($disk)->delete($path);
+        }
+        return false;
+    }
 }
-
-public function UploadImageCategories(Request $request ,  $nameInput , $foldername )
-{
-    $image = $request->file($nameInput)->getClientOriginalName();
-    $path = $request->file($nameInput)->storeAs($foldername , $image  , 'Categories') ;
-    return $path ;
-}
-
-public function UploadImageProducts(Request $request ,  $nameInput , $foldername )
-{
-    $image = $request->file($nameInput)->getClientOriginalName();
-    $path = $request->file($nameInput)->storeAs($foldername , $image  , 'Products') ;
-    return $path ;
-}
-
-
-
-
-
-
-}
-
-
-?>

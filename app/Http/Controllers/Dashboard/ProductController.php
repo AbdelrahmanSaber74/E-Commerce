@@ -3,83 +3,80 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\Products\StoreProductRequest;
-use App\Models\Product;
-use App\Models\ProductColor;
-use App\Models\ProductImage;
-use App\Models\ProductSize;
-use App\Repositorties\CategoryRepository;
-use App\Repositorties\ProductRepository;
-use App\Repository\Products\ProductsServiceInterface;
-use App\Services\CategoryService;
+use App\Http\Requests\StoreProductRequest;
 use App\Services\ProductService;
-use App\Traits\UploadImageTrait;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\Foreach_;
 
 class ProductController extends Controller
 {
-    public $Product ;
+    protected $productService;
+    protected $categoryService;
 
-    public function __construct(ProductsServiceInterface $Product)
+    public function __construct(ProductService $productService, CategoryService $categoryService)
     {
-        $this->Product = $Product;
+        $this->productService = $productService;
+        $this->categoryService = $categoryService;
     }
 
     public function index()
     {
-        return $this->Product->index();
+        $products = $this->productService->getAllProducts(10);
+        return view('dashboard.products.index', compact('products'));
     }
 
-    public function getall(Request $request)
-    {
-    //    return $this->productService->datatable();
-    }
-
-    
     public function create()
     {
-        return $this->Product->create() ;
+        $categories = $this->categoryService->getAllCategories()['mainCategories'];
+        return view('dashboard.products.create', compact('categories'));
     }
 
-   
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
+        try {
+            $productDTO = ProductDTO::fromRequest(
+                $request->validated(), 
+                $request->file('image')
+            );
 
-       return $this->Product->store($request) ;
-     }
+            $this->productService->storeProduct($productDTO);
 
-
-    
-
-
-   
-    public function show($id)
-    {
-        //
+            return redirect()->route('Products.index')->with('success', __('admin.product_added'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-   
-    public function edit($id)
+    public function edit(int|string $id)
     {
-    //     $categories = $this->categoryService->getAll();
-    //     $product = $this->productService->getById($id);
-    //    return view('dashboard.products.edit' , compact('categories', 'product'));
+        $product = $this->productService->getProductById($id);
+        $categories = $this->categoryService->getAllCategories()['mainCategories'];
+        return view('dashboard.products.edit', compact('product', 'categories'));
     }
 
-   
-    public function update(Request $request, $id)
+    public function update(StoreProductRequest $request, int|string $id)
     {
-    //    $this->productService->update($id,$request->all());
-    //    return redirect()->route('dashboard.products.index');
+        try {
+            $productDTO = ProductDTO::fromRequest(
+                $request->validated(), 
+                $request->file('image')
+            );
+
+            $this->productService->updateProduct($id, $productDTO);
+
+            return redirect()->route('Products.index')->with('success', __('admin.product_updated'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-    
     public function destroy($id)
     {
-        //
+        try {
+            $this->productService->deleteProduct($id);
+            return redirect()->back()->with('success', __('admin.product_deleted'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
-
-
-} 
-
+}

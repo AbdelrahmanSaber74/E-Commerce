@@ -24,11 +24,9 @@ class StoreCategoriesRequest extends FormRequest
     public function rules()
     {
         return [
-        
-            'name' => 'required',
-            'image' => 'mimes:jpeg,png,jpg,gif' ,
-            'parent_id' => 'required',
-
+            'name' => 'required|string|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'parent_id' => 'nullable|exists:categories,id',
         ];
     }
 }

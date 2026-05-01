@@ -3,64 +3,65 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\Categories\CategoryDelete;
-use App\Http\Requests\Dashboard\Categories\CategoryDeleteRequest;
-use App\Http\Requests\Dashboard\Categories\CategoryStoreRequest;
-use App\Http\Requests\Dashboard\Categories\CategoryUpdateRequest;
-use App\Models\Category;
+use App\Http\Requests\StoreCategoriesRequest;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
-use DataTables;
+
 class CategoryController extends Controller
 {
-
-    private $categoryService;
+    protected $categoryService;
 
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
     }
+
     public function index()
     {
-        $mainCategories = $this->categoryService->getMainCategories();
-        return view('dashboard.categories.index' , compact('mainCategories'));
+        $data = $this->categoryService->getAllCategories(10);
+        return view('dashboard.categories.index', [
+            'categories' => $data['categories'],
+            'mainCategories' => $data['mainCategories']
+        ]);
     }
 
-
-    public function getall()
+    public function store(StoreCategoriesRequest $request)
     {
-       return $this->categoryService->datatable();
+        try {
+            $categoryDTO = CategoryDTO::fromRequest(
+                $request->validated(), 
+                $request->file('image')
+            );
+            
+            $this->categoryService->storeCategory($categoryDTO);
+            return redirect()->back()->with('success', __('admin.category_added'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-   
-    public function store(CategoryStoreRequest $request)
+    public function update(StoreCategoriesRequest $request, int|string $id)
     {
-        $this->categoryService->store($request->validated());
-        return redirect()->route('dashboard.categories.index')->with('success', 'تمت الاضافة بنجاح');
+        try {
+            $categoryDTO = CategoryDTO::fromRequest(
+                $request->validated(), 
+                $request->file('image')
+            );
+
+            $this->categoryService->updateCategory($id, $categoryDTO);
+            return redirect()->back()->with('success', __('admin.category_updated'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
-   
-    
-    public function edit($id)
+    public function destroy(Request $request)
     {
-        $category = $this->categoryService->getById($id,true);
-        $mainCategories = $this->categoryService->getMainCategories();
-        return view('dashboard.categories.edit' , compact('category','mainCategories'));
-    }
-
-   
-    public function update( $id ,CategoryUpdateRequest $request)
-    {
-        $this->categoryService->update($id,$request->validated());
-        return redirect()->route('dashboard.categories.edit' , $id)->with('success', 'تمت الاضافة بنجاح');
-    }
-
-    
-
-
-    public function delete(CategoryDeleteRequest $request)
-    {
-        $this->categoryService->delete($request->validated());
-        return redirect()->route('dashboard.categories.index');
+        try {
+            $this->categoryService->deleteCategory((int)$request->id);
+            return redirect()->back()->with('success', __('admin.category_deleted'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }
