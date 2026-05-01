@@ -24,6 +24,7 @@ return new class extends Migration
             // $table->foreign('category_id')->references('id')->on('categories');
 
             $table->foreignId('category_id')->constrained('categories');
+            $table->integer('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

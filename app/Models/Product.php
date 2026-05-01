@@ -11,6 +11,11 @@ class Product extends Model
     protected $fillable = [ 'name', 'description', 'image', 'price', 'discount_price', 'category_id'];
     protected $table = 'products';
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
 
     public  function category(){
         return $this->belongsTo(Category::class, 'category_id');
@@ -26,5 +31,10 @@ class Product extends Model
 
     public function productSize(){
         return $this->hasMany(ProductSize::class, 'product_id');
+    }
+
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class);
     }
 }
